@@ -60,6 +60,43 @@
 
 <script>
 
+function playSound(event) {
+        
+    // select div with a key class that has data-key attribute
+    const keyDiv = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+    // select the audio element that has corresponding data-key attribute
+    const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    
+    if (!audio) return; // stop running the rest of function if no is involved (mainly for next two lines)
+    audio.currentTime = 0;
+    audio.play();
+
+    // listen to transitionend and remove the "playing" class
+    keyDiv.addEventListener('transitionend', function(event) { 
+        event.target.classList.remove('playing');
+    })
+
+    // Visual changes for the key div at keydown
+    keyDiv.classList.add('playing');
+    
+
+    //const keys = document.querySelectorAll('.key');
+    //// loop through the keys and attach event listener to listen 'transitionend' event
+    //// execute removeTransition function if 'transitionend' is detected
+    //keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+}
+
+/*
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') return; // skip this unless it's 'transform'
+    console.log(e.target);
+    e.target.classList.remove('playing');
+}
+*/
+
+window.addEventListener("keydown", playSound);
+
 </script>
 
 
